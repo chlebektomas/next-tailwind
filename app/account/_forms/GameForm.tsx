@@ -1,15 +1,15 @@
 "use client";
 
 import { Game } from "@/types/game";
-import { gameAction } from "./actions";
+import { gameAction } from "../content/actions";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
-import { useToast } from "../ui/useToast";
-import CustomSwitch from "../formControl/CustomSwitch";
-import Input from "../formControl/Input";
+import { useToast } from "@/components/ui/useToast";
+import ControlledInput from "@/components/FormControl/ControlledInput";
+import ControlledSwitch from "@/components/FormControl/ControlledSwitch";
+import ControlledTextArea from "@/components/FormControl/ControlledTextArea";
 import React, { useEffect } from "react";
-import SubmitButton from "../ui/SubmitButton";
-import TextArea from "../formControl/TextArea";
+import SubmitButton from "@/components/FormControl/SubmitButton";
 
 const initialState = {
 	status: "",
@@ -20,7 +20,7 @@ interface GameFormProps {
 	defaultValues: Game;
 }
 
-function GameForm({ defaultValues }: GameFormProps) {
+export default function GameForm({ defaultValues }: GameFormProps) {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [state, formAction] = useFormState(gameAction, initialState);
@@ -39,9 +39,8 @@ function GameForm({ defaultValues }: GameFormProps) {
 		<form id="game-form" action={formAction} className="space-y-8">
 			<div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<input hidden name="id" value={defaultValues.id} />
-				<input hidden name="userId" value={defaultValues.userId} />
 				<div className="col-span-full">
-					<CustomSwitch
+					<ControlledSwitch
 						label="Private"
 						name="private"
 						initialValue={defaultValues.private}
@@ -49,7 +48,7 @@ function GameForm({ defaultValues }: GameFormProps) {
 					/>
 				</div>
 				<div className="col-span-full">
-					<Input
+					<ControlledInput
 						label="Title"
 						name="title"
 						value={defaultValues.title}
@@ -57,7 +56,7 @@ function GameForm({ defaultValues }: GameFormProps) {
 					/>
 				</div>
 				<div className="col-span-full">
-					<TextArea
+					<ControlledTextArea
 						label="Description"
 						name="description"
 						value={defaultValues.description}
@@ -79,5 +78,3 @@ function GameForm({ defaultValues }: GameFormProps) {
 		</form>
 	);
 }
-
-export default GameForm;

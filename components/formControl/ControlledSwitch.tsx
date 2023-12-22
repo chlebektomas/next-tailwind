@@ -1,56 +1,50 @@
-import { Switch } from "@headlessui/react";
-import {
-	FormField,
-	FormItem,
-	FormLabel,
-	FormControl,
-	FormDescription,
-	FormMessage,
-} from "../ui/form";
-import { FieldPath, UseControllerProps } from "react-hook-form";
+import { ZodIssue } from "zod";
+import * as Switch from "@radix-ui/react-switch";
+import { useState } from "react";
 
-interface ControlledSwitchProps<
-	Values extends Record<string, any>,
-	Name extends FieldPath<Values>
-> {
-	control: UseControllerProps<Values, Name>["control"];
-	helperText?: React.ReactNode;
+interface ControlledSwitchProps {
 	label: string;
-	name: Name;
+	name: string;
+	initialValue: boolean;
+	description?: string;
+	errors: ZodIssue[] | undefined;
 }
 
-function ControlledSwitch<
-	Values extends Record<string, any>,
-	Name extends FieldPath<Values>
->({ control, helperText, label, name }: ControlledSwitchProps<Values, Name>) {
+export default function ControlledSwitch({
+	label,
+	name,
+	initialValue,
+	description,
+	errors,
+}: ControlledSwitchProps) {
+	const [value, setValue] = useState(initialValue);
+
 	return (
-		<FormField
-			control={control}
-			name={name}
-			render={({ field }) => (
-				<FormItem>
-					<FormLabel>{label}</FormLabel>
-					<FormControl>
-						<Switch
-							checked={field.value}
-							onChange={field.onChange}
-							className={`${
-								field.value ? "bg-green-500" : "bg-gray-400"
-							} relative inline-flex h-6 w-11 items-center rounded-full mt-2`}
+		<>
+			<p className="input-label">{label}</p>
+			{value}
+			<Switch.Root
+				name={name}
+				checked={value}
+				className="peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
+				onCheckedChange={() => {
+					setValue(!value);
+				}}
+			>
+				<Switch.Thumb className="pointer-events-none block h-4 w-4 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0" />
+			</Switch.Root>
+			{description && <p className="input-description">{description}</p>}
+			{errors?.map(
+				(error, i) =>
+					error.path[0] === name && (
+						<p
+							key={i}
+							className="text-sm font-medium text-red-500 error-message"
 						>
-							<span
-								className={`${
-									field.value ? "translate-x-6" : "translate-x-1"
-								} inline-block h-4 w-4 transform rounded-full bg-white transition`}
-							/>
-						</Switch>
-					</FormControl>
-					{helperText && <FormDescription>{helperText}</FormDescription>}
-					<FormMessage />
-				</FormItem>
+							{error.message}
+						</p>
+					)
 			)}
-		/>
+		</>
 	);
 }
-
-export default ControlledSwitch;

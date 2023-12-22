@@ -1,31 +1,24 @@
 import { ZodIssue } from "zod";
 
-interface TextAreaProps {
+interface ControlledInputProps {
 	label: string;
 	name: string;
 	value: string;
-	rows: number;
 	description?: string;
 	errors: ZodIssue[] | undefined;
 }
 
-function TextArea({
+export default function ControlledInput({
 	label,
 	name,
 	value,
-	rows,
 	description,
 	errors,
-}: TextAreaProps) {
+}: ControlledInputProps) {
 	return (
 		<>
 			<p className="input-label">{label}</p>
-			<textarea
-				name={name}
-				defaultValue={value}
-				rows={rows}
-				className="input"
-			/>
+			<input name={name} defaultValue={value} type="text" className="input" />
 			{description && <p className="input-description">{description}</p>}
 			{errors?.map(
 				(error, i) =>
@@ -41,5 +34,3 @@ function TextArea({
 		</>
 	);
 }
-
-export default TextArea;

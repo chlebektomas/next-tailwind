@@ -1,10 +1,10 @@
-import Headline from "@/components/ui/Headline";
-import ProfileForm from "@/components/ProfileForm/ProfileForm";
+import Headline from "@/app/account/_components/Headline";
+import ProfileForm from "@/app/account/_forms/ProfileForm";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { UserProfile } from "@/types/user";
 import { getServerSession } from "next-auth";
 
-async function Profile() {
+export default async function Profile() {
 	const session = await getServerSession(authOptions);
 
 	const defaultValues: UserProfile = {
@@ -24,5 +24,3 @@ async function Profile() {
 		</>
 	);
 }
-
-export default Profile;

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Game } from "@/types/game";
-import { PlusIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 
@@ -10,7 +10,7 @@ interface GameListProps {
 	games: Game[];
 }
 
-function GameList({ games }: GameListProps) {
+export default function GameList({ games }: GameListProps) {
 	return (
 		<div className="space-y-3 mt-10">
 			{games.length === 0 && <h2>You don&#39;t have any content yet...</h2>}
@@ -59,5 +59,3 @@ function GameList({ games }: GameListProps) {
 		</div>
 	);
 }
-
-export default GameList;

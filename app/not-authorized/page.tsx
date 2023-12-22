@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-function NotAuthorized() {
+export default function NotAuthorized() {
 	return (
 		<main className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center pointer-events-none">
 			<div className="text-center">
@@ -16,5 +16,3 @@ function NotAuthorized() {
 		</main>
 	);
 }
-
-export default NotAuthorized;

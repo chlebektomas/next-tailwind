@@ -9,7 +9,12 @@ interface HeadlineProps {
 	action?: React.ReactNode;
 }
 
-function Headline({ backTo, title, description, action }: HeadlineProps) {
+export default function Headline({
+	backTo,
+	title,
+	description,
+	action,
+}: HeadlineProps) {
 	return (
 		<>
 			<h1 className="font-semibold text-xl flex items-center gap-2">
@@ -23,5 +28,3 @@ function Headline({ backTo, title, description, action }: HeadlineProps) {
 		</>
 	);
 }
-
-export default Headline;

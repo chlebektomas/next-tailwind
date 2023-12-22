@@ -1,8 +1,8 @@
 "use client";
 
-import Headline from "@/components/ui/Headline";
+import Headline from "@/app/account/_components/Headline";
 
-function Billing() {
+export default function Billing() {
 	return (
 		<>
 			<Headline
@@ -13,5 +13,3 @@ function Billing() {
 		</>
 	);
 }
-
-export default Billing;

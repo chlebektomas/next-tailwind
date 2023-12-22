@@ -13,7 +13,7 @@ const data = [
 	},
 ];
 
-function UpSell() {
+export default function UpSell() {
 	return (
 		<section className="main-bg py-12 sm:py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -34,5 +34,3 @@ function UpSell() {
 		</section>
 	);
 }
-
-export default UpSell;

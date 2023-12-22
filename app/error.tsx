@@ -1,6 +1,6 @@
 "use client";
 
-function Error() {
+export default function Error() {
 	return (
 		<main className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center pointer-events-none">
 			<div className="text-center">
@@ -11,5 +11,3 @@ function Error() {
 		</main>
 	);
 }
-
-export default Error;

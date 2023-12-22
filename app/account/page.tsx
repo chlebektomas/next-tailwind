@@ -1,30 +1,37 @@
 import Image from "next/image";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
-import Menu from "@/components/Menu";
+import AccountMenu from "@/app/account/_components/AccountMenu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
-async function Account() {
+export default async function Account() {
 	const session = await getServerSession(authOptions);
-	const { image, name, email } = session?.user!;
+
+	if (!session) return;
+
+	const { image, name, email } = session?.user;
 
 	return (
 		<div className="text-center">
-			<div className="avatar avatar-md w-32 h-32 mx-auto mb-6 rounded-full relative">
+			<div className="mx-auto mb-6">
 				{image ? (
-					<Image src={image} alt="avatar" className="rounded-full" fill />
+					<Image
+						src={image}
+						alt="avatar"
+						className="rounded-full mx-auto"
+						width={128}
+						height={128}
+					/>
 				) : (
 					<UserCircleIcon
-						className="h-full w-full text-gray-300"
+						className="w-32 h-32 rounded-full text-gray-300"
 						aria-hidden="true"
 					/>
 				)}
 			</div>
 			<h1 className="text-lg font-semibold">{name}</h1>
 			<h2 className=" text-neutral-500">{email}</h2>
-			<Menu />
+			<AccountMenu />
 		</div>
 	);
 }
-
-export default Account;

@@ -1,7 +1,7 @@
 import { getGameById } from "@/lib/firestore";
 import { Game } from "@/types/game";
 
-async function Game({ params }: { params: { id: string } }) {
+export default async function Game({ params }: { params: { id: string } }) {
 	const game: Game = await getGameById(params.id);
 	const { title, description } = game;
 
@@ -18,5 +18,3 @@ async function Game({ params }: { params: { id: string } }) {
 		</main>
 	);
 }
-
-export default Game;

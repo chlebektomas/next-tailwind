@@ -1,7 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import React from "react";
+import Skeleton from "@/components/ui/Skeleton";
 
-function Loading() {
+export default function Loading() {
 	return (
 		<section className="max-w-7xl mx-auto p-6">
 			<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -18,5 +17,3 @@ function Loading() {
 		</section>
 	);
 }
-
-export default Loading;

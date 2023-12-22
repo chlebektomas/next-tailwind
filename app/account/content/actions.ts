@@ -9,12 +9,12 @@ import { z } from "zod";
 
 export async function gameAction(prevState: any, formData: FormData) {
 	const session = await getServerSession(authOptions);
+	const currentUserId = session?.user?.id;
 
 	if (!session) return;
 
 	const schema = z.object({
 		id: z.string(),
-		userId: z.string(),
 		private: z.boolean(),
 		title: z.string().min(3),
 		description: z.string().min(5),
@@ -22,7 +22,6 @@ export async function gameAction(prevState: any, formData: FormData) {
 
 	const parse = schema.safeParse({
 		id: formData.get("id"),
-		userId: formData.get("userId"),
 		private: formData.get("private") === "on" ? true : false,
 		title: formData.get("title"),
 		description: formData.get("description"),
@@ -36,7 +35,7 @@ export async function gameAction(prevState: any, formData: FormData) {
 
 	const requestData = {
 		id: data.id,
-		userId: data.userId,
+		userId: currentUserId,
 		private: data.private,
 		title: data.title,
 		description: data.description,
@@ -44,6 +43,7 @@ export async function gameAction(prevState: any, formData: FormData) {
 	};
 
 	try {
+		// update
 		if (requestData.id) {
 			const ref = doc(db, "games", requestData.id);
 			await setDoc(ref, requestData, { merge: true });
@@ -52,6 +52,7 @@ export async function gameAction(prevState: any, formData: FormData) {
 			return { message: `Game edited succesfully!` };
 		}
 
+		// create
 		if (!requestData.id) {
 			const { id, ...dataWithoutId } = requestData;
 			const gamesCollection = collection(db, "games");

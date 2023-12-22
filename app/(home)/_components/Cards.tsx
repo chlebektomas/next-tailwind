@@ -33,7 +33,7 @@ const data = [
 	},
 ];
 
-function Cards() {
+export default function Cards() {
 	return (
 		<section className="py-12 sm:py-24">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -63,5 +63,3 @@ function Cards() {
 		</section>
 	);
 }
-
-export default Cards;

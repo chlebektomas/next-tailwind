@@ -1,10 +1,10 @@
-import Headline from "@/components/ui/Headline";
-import GameForm from "@/components/GameForm/GameForm";
+import Headline from "@/app/account/_components/Headline";
+import GameForm from "@/app/account/_forms/GameForm";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Game } from "@/types/game";
 import { getServerSession } from "next-auth";
 
-async function Create() {
+export default async function Create() {
 	const session = await getServerSession(authOptions);
 
 	if (!session) return;
@@ -25,5 +25,3 @@ async function Create() {
 		</>
 	);
 }
-
-export default Create;

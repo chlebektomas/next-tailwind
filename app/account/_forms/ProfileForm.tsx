@@ -1,15 +1,15 @@
 "use client";
 
-import { updateProfileAction } from "./actions";
+import { updateProfileAction } from "../profile/actions";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
 import { UserProfile } from "@/types/user";
-import { useToast } from "../ui/useToast";
-import CustomSwitch from "../formControl/CustomSwitch";
-import Input from "../formControl/Input";
-import SubmitButton from "../ui/SubmitButton";
-import TextArea from "../formControl/TextArea";
-import { useEffect } from "react";
+import { useToast } from "@/components/ui/useToast";
+import ControlledInput from "@/components/FormControl/ControlledInput";
+import ControlledSwitch from "@/components/FormControl/ControlledSwitch";
+import ControlledTextArea from "@/components/FormControl/ControlledTextArea";
+import SubmitButton from "@/components/FormControl/SubmitButton";
 
 const initialState = {
 	status: "",
@@ -20,7 +20,7 @@ interface ProfileFormProps {
 	defaultValues: UserProfile;
 }
 
-function ProfileForm({ defaultValues }: ProfileFormProps) {
+export default function ProfileForm({ defaultValues }: ProfileFormProps) {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [state, formAction] = useFormState(updateProfileAction, initialState);
@@ -38,7 +38,7 @@ function ProfileForm({ defaultValues }: ProfileFormProps) {
 		<form id="profile-form" action={formAction} className="space-y-8">
 			<div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<div className="col-span-full">
-					<CustomSwitch
+					<ControlledSwitch
 						label="Private"
 						name="private"
 						initialValue={defaultValues.private}
@@ -46,7 +46,7 @@ function ProfileForm({ defaultValues }: ProfileFormProps) {
 					/>
 				</div>
 				<div className="col-span-full">
-					<Input
+					<ControlledInput
 						label="Title"
 						name="title"
 						value={defaultValues.title}
@@ -54,7 +54,7 @@ function ProfileForm({ defaultValues }: ProfileFormProps) {
 					/>
 				</div>
 				<div className="col-span-full">
-					<TextArea
+					<ControlledTextArea
 						label="Description"
 						name="description"
 						value={defaultValues.description}
@@ -76,5 +76,3 @@ function ProfileForm({ defaultValues }: ProfileFormProps) {
 		</form>
 	);
 }
-
-export default ProfileForm;

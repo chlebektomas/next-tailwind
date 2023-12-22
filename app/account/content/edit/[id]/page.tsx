@@ -1,11 +1,11 @@
-import Headline from "@/components/ui/Headline";
-import GameForm from "@/components/GameForm/GameForm";
+import Headline from "@/app/account/_components/Headline";
+import GameForm from "@/app/account/_forms/GameForm";
 import { getGameByUserId } from "@/lib/firestore";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { Game } from "@/types/game";
 
-async function Edit({ params }: { params: { id: string } }) {
+export default async function Edit({ params }: { params: { id: string } }) {
 	const session = await getServerSession(authOptions);
 
 	if (!session) return;
@@ -28,5 +28,3 @@ async function Edit({ params }: { params: { id: string } }) {
 		</>
 	);
 }
-
-export default Edit;

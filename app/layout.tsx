@@ -1,8 +1,8 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
-import AuthProvider from "./AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
+import AuthProvider from "./AuthProvider";
+import NavigationMenu from "@/app/_components/NavigationMenu";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Next.js + Tailwind CSS with Firebase",
@@ -18,7 +18,7 @@ export default async function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body suppressHydrationWarning className="min-h-screen main-bg">
 				<AuthProvider>
-					<Navigation />
+					<NavigationMenu />
 					{children}
 					<Toaster />
 				</AuthProvider>

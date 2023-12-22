@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useFormStatus } from "react-dom";
-import Spinner from "./Spinner";
+import Spinner from "../ui/Spinner";
 
 interface SubmitButtonProps {
 	title: string | ReactNode;

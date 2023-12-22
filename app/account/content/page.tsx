@@ -1,12 +1,12 @@
-import Headline from "@/components/ui/Headline";
+import Headline from "@/app/account/_components/Headline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { getGamesByUserId } from "@/lib/firestore";
-import GameList from "@/components/GameList";
+import GameList from "@/app/account/_components/GameList";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 
-async function Content() {
+export default async function Content() {
 	const session = await getServerSession(authOptions);
 
 	if (!session) return;
@@ -30,5 +30,3 @@ async function Content() {
 		</>
 	);
 }
-
-export default Content;

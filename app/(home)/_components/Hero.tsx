@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 
-function Hero() {
+export default function Hero() {
 	const handleSignIn = () => {
 		signIn();
 	};
@@ -46,5 +46,3 @@ function Hero() {
 		</section>
 	);
 }
-
-export default Hero;

@@ -1,16 +1,11 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-	ArrowRightOnRectangleIcon,
 	ArrowRightIcon,
 	UserCircleIcon,
 	SquaresPlusIcon,
 	WalletIcon,
 } from "@heroicons/react/20/solid";
-import { useToast } from "./ui/useToast";
-import { signOut } from "next-auth/react";
+import { SignOutButton } from "@/components/SignOutButton";
 
 const menu = [
 	{
@@ -31,19 +26,7 @@ const menu = [
 	},
 ];
 
-function Menu() {
-	const router = useRouter();
-	const { toast } = useToast();
-
-	const handleSignOut = () => {
-		router.replace("/");
-		signOut({ redirect: false }).then(() => {
-			toast({
-				title: "You are signed out.",
-			});
-		});
-	};
-
+export default function AccountMenu() {
 	return (
 		<div className="sm:w-96 mx-auto mt-10 ">
 			<ul className="space-y-4">
@@ -58,12 +41,7 @@ function Menu() {
 				))}
 			</ul>
 			<hr className="mt-5 border-neutral-700" />
-			<div className="account-menu-link mt-5" onClick={handleSignOut}>
-				<ArrowRightOnRectangleIcon className="h-5 w-5" aria-hidden="true" />
-				Sign out
-			</div>
+			<SignOutButton />
 		</div>
 	);
 }
-
-export default Menu;

@@ -3,7 +3,7 @@ import { Game } from "@/types/game";
 import Image from "next/image";
 import Link from "next/link";
 
-async function Games() {
+export default async function Page() {
 	const games: Game[] = await getGames();
 
 	return (
@@ -34,5 +34,3 @@ async function Games() {
 		</main>
 	);
 }
-
-export default Games;

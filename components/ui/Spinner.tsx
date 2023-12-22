@@ -4,7 +4,7 @@ interface SpinnerProps {
 	blur?: boolean;
 }
 
-function Spinner({ blur = false }: SpinnerProps) {
+export default function Spinner({ blur = false }: SpinnerProps) {
 	return (
 		<div
 			role="status"
@@ -33,5 +33,3 @@ function Spinner({ blur = false }: SpinnerProps) {
 		</div>
 	);
 }
-
-export default Spinner;
