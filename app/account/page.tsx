@@ -1,23 +1,18 @@
-"use client";
-
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import Menu from "@/components/Menu";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-function Account() {
-	const { data: session } = useSession();
+async function Account() {
+	const session = await getServerSession(authOptions);
+	const { image, name, email } = session?.user!;
 
 	return (
 		<div className="text-center">
 			<div className="avatar avatar-md w-32 h-32 mx-auto mb-6 rounded-full relative">
-				{session?.user?.image ? (
-					<Image
-						src={session?.user?.image}
-						alt="avatar"
-						className="rounded-full"
-						fill
-					/>
+				{image ? (
+					<Image src={image} alt="avatar" className="rounded-full" fill />
 				) : (
 					<UserCircleIcon
 						className="h-full w-full text-gray-300"
@@ -25,8 +20,8 @@ function Account() {
 					/>
 				)}
 			</div>
-			<h1 className="text-lg font-semibold">{session?.user?.name}</h1>
-			<h2 className=" text-neutral-500">{session?.user.email}</h2>
+			<h1 className="text-lg font-semibold">{name}</h1>
+			<h2 className=" text-neutral-500">{email}</h2>
 			<Menu />
 		</div>
 	);

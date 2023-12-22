@@ -1,48 +1,30 @@
-"use client";
-
 import Headline from "@/components/ui/Headline";
-import GameForm from "@/components/forms/GameForm";
-import Spinner from "@/components/ui/Spinner";
-import { toast } from "@/components/ui/useToast";
+import GameForm from "@/components/GameForm/GameForm";
 import { getGameByUserId } from "@/lib/firestore";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 import { Game } from "@/types/game";
-import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
 
-function Edit({ params }: { params: { id: string } }) {
-	const { data: session } = useSession();
-	const [game, setGame] = useState<Game>();
-	const [loading, setLoading] = useState(true);
+async function Edit({ params }: { params: { id: string } }) {
+	const session = await getServerSession(authOptions);
 
-	useEffect(() => {
-		const fetchGame = async () => {
-			try {
-				if (!session) return;
-				const response = await getGameByUserId(session.user.id, params.id);
-				if (response) {
-					setGame(response);
-				}
-			} catch (error) {
-				toast({
-					title: String(error),
-					variant: "destructive",
-				});
-			} finally {
-				setLoading(false);
-			}
-		};
+	if (!session) return;
 
-		fetchGame();
-	}, [params.id, session]);
+	const game = await getGameByUserId(session.user.id, params.id);
 
-	if (loading) {
-		return <Spinner />;
-	}
+	const defaultValues: Game = {
+		id: game.id,
+		private: game.private,
+		title: game.title,
+		description: game.description,
+		createdAt: game.createdAt,
+		userId: session.user.id,
+	};
 
 	return (
 		<>
 			<Headline title={`Edit ${game?.title}`} backTo="/account/content" />
-			<GameForm mode="edit" data={game} />
+			<GameForm defaultValues={defaultValues} />
 		</>
 	);
 }

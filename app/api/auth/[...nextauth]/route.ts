@@ -5,7 +5,7 @@ import { firestore } from "@/lib/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
 	adapter: firestore,
 	providers: [
 		GoogleProvider({

@@ -1,20 +1,18 @@
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 import {
-	addDoc,
 	collection,
 	doc,
 	getDoc,
 	getDocs,
 	orderBy,
 	query,
-	setDoc,
 	where,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { cache } from "react";
 import { Game } from "@/types/game";
-import { UserProfile } from "@/types/user";
+import { notFound, redirect } from "next/navigation";
 
 export const firestore = FirestoreAdapter({
 	credential: cert({
@@ -27,84 +25,13 @@ export const firestore = FirestoreAdapter({
 	}),
 });
 
-export const updateUserProfile = async (
-	userId: string,
-	userData: UserProfile
-): Promise<UserProfile> => {
-	try {
-		const ref = doc(db, "users", userId);
-
-		const profile = {
-			profile: {
-				private: userData.private,
-				title: userData.title,
-				description: userData.description,
-			},
-		};
-
-		await setDoc(ref, profile, { merge: true });
-
-		return { ...userData };
-	} catch (error) {
-		console.error("Error updating game: ", error);
-		throw error;
-	}
-};
-
-export const createGame = async (gameData: Game): Promise<Game> => {
-	try {
-		const { id, ...dataWithoutId } = gameData;
-		const gamesCollection = collection(db, "games");
-		const docRef = await addDoc(gamesCollection, dataWithoutId);
-
-		return { id: docRef.id, ...dataWithoutId };
-	} catch (error) {
-		console.error("Error creating game: ", error);
-		throw error;
-	}
-};
-
-export const updateGame = async (
-	userId: string,
-	gameData: Game
-): Promise<Game> => {
-	try {
-		const { id, ...dataWithoutId } = gameData;
-
-		if (typeof id !== "string") {
-			throw new Error("ID must be a string");
-		}
-
-		const ref = doc(db, "games", id);
-
-		const snapShot = await getDoc(ref);
-
-		if (!snapShot.exists()) {
-			throw new Error("Game not found");
-		}
-
-		const data = snapShot.data();
-
-		if (data.userId !== userId) {
-			throw new Error("Unauthorized access");
-		}
-
-		await setDoc(ref, dataWithoutId, { merge: true });
-
-		return { id, ...dataWithoutId };
-	} catch (error) {
-		console.error("Error updating game: ", error);
-		throw error;
-	}
-};
-
 export const getGameById = cache(async (id: string): Promise<Game> => {
 	try {
 		const ref = doc(db, "games", id);
 		const snapShot = await getDoc(ref);
 
 		if (!snapShot.exists()) {
-			throw new Error("Game not found");
+			notFound();
 		}
 
 		const data = snapShot.data();
@@ -131,13 +58,13 @@ export const getGameByUserId = cache(
 			const snapShot = await getDoc(ref);
 
 			if (!snapShot.exists()) {
-				throw new Error("Game not found");
+				notFound();
 			}
 
 			const data = snapShot.data();
 
 			if (data.userId !== userId) {
-				throw new Error("Unauthorized access");
+				redirect("/not-authorized");
 			}
 
 			const game: Game = {
@@ -214,44 +141,3 @@ export const getGamesByUserId = async (id: string): Promise<Game[]> => {
 		throw error;
 	}
 };
-
-function auth() {
-	throw new Error("Function not implemented.");
-}
-// GET SNAPSHOT
-// export const getGamesSnapshot = (
-// 	cb: (data: { id: string }[]) => void
-// ): (() => void) => {
-// 	try {
-// 		const ref = collection(db, "games");
-// 		const q = query(ref, orderBy("createdAt", "desc"));
-
-// 		const unsubscribe = onSnapshot(q, (snapshot) => {
-// 			const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-// 			cb(list);
-// 		});
-
-// 		return unsubscribe;
-// 	} catch (error) {
-// 		console.error("Error getting games:", error);
-// 		throw error;
-// 	}
-// };
-
-// Usage SNAPSHOT
-// useEffect(() => {
-// 	try {
-// 		const unsubscribe = getGamesSnapshot((data: Game[]) => {
-// 			setGames(data);
-// 			setLoading(false);
-// 		});
-// 		return () => {
-// 			unsubscribe();
-// 		};
-// 	} catch (error) {
-// 		toast({
-// 			title: "Upps, something went wrong.",
-// 			variant: "destructive",
-// 		});
-// 	}
-// }, []);

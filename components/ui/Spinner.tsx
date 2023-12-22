@@ -1,8 +1,17 @@
-function Spinner() {
+import { cn } from "@/lib/utils";
+
+interface SpinnerProps {
+	blur?: boolean;
+}
+
+function Spinner({ blur = false }: SpinnerProps) {
 	return (
 		<div
 			role="status"
-			className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center"
+			className={cn(
+				"fixed w-screen h-screen left-0 top-0 flex items-center justify-center",
+				blur && "backdrop-blur bg-opacity-50"
+			)}
 		>
 			<svg
 				aria-hidden="true"
