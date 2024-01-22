@@ -3,8 +3,8 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { getGamesByUserId } from "@/lib/firestore";
 import GameList from "@/app/account/_components/GameList";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 export default async function Content() {
 	const session = await getServerSession(authOptions);

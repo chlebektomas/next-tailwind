@@ -1,6 +1,6 @@
 import Headline from "@/app/account/_components/Headline";
 import ProfileForm from "@/app/account/_forms/ProfileForm";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { UserProfile } from "@/types/user";
 import { getServerSession } from "next-auth";
 

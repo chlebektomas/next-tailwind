@@ -1,6 +1,6 @@
 import Headline from "@/app/account/_components/Headline";
 import GameForm from "@/app/account/_forms/GameForm";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { Game } from "@/types/game";
 import { getServerSession } from "next-auth";
 

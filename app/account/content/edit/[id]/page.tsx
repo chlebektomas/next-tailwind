@@ -1,9 +1,9 @@
 import Headline from "@/app/account/_components/Headline";
 import GameForm from "@/app/account/_forms/GameForm";
 import { getGameByUserId } from "@/lib/firestore";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { Game } from "@/types/game";
+import { authOptions } from "@/lib/authOptions";
 
 export default async function Edit({ params }: { params: { id: string } }) {
 	const session = await getServerSession(authOptions);

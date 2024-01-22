@@ -2,7 +2,7 @@ import Image from "next/image";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import AccountMenu from "@/app/account/_components/AccountMenu";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 export default async function Account() {
 	const session = await getServerSession(authOptions);

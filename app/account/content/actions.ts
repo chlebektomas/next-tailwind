@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { db } from "@/lib/firebase";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { getServerSession } from "next-auth";
